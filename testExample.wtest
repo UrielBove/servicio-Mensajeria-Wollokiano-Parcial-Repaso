@@ -1,4 +1,4 @@
-import example.pepita
+import example.*
 
 describe "group of tests for pepita" {
 
@@ -6,4 +6,39 @@ describe "group of tests for pepita" {
     assert.equals(100, pepita.energy())
   }
 
+}
+
+describe "tests de mensajeria wollok"{
+  //const chat1 = new Chat()
+  const pepe = new Usuario(nombre = "pepe", espacioEnMemoria = 100)
+  const pablo = new Usuario(nombre = "pablo", espacioEnMemoria = 200)
+  const jacinto = new Usuario(nombre = "jacinto", espacioEnMemoria = 120)
+  const chat1 = new Chat(participantes = [pepe, pablo])
+  const mensaje = new Mensaje(emisor = pepe, tipoDeContenido = new Texto(elTexto = "hola como vaaa"))
+  const mensaje2 = new Mensaje(emisor = jacinto, tipoDeContenido = new Texto(elTexto = "buenas"))
+  
+  test "Saber el espacio que ocupa un chat"{
+  pepe.agregar(chat1)
+  pablo.agregar(chat1)
+  chat1.enviar(mensaje)
+  assert.equals(23.2, chat1.espacioOcupado())//5+1.3*14(elTexto.size)
+  }
+
+  test "Saber si un chat contiene un mensaje enviado"{
+  pepe.agregar(chat1)
+  pablo.agregar(chat1)
+  chat1.enviar(mensaje)
+  assert.that(chat1.mensajesEnviados().contains(mensaje))
+  }
+
+  test "Mensaje no cumple requerimientos para ser enviado"{
+  pepe.agregar(chat1)
+  pablo.agregar(chat1)
+  assert.throwsExceptionWithMessage("No se cumplen restricciones", {chat1.validarEnvio(mensaje2)})
+  }
+  test "Vemos queMensaje no cumple requerimientos para ser enviado"{
+  pepe.agregar(chat1)
+  pablo.agregar(chat1)
+  assert.throwsException({chat1.validarEnvio(mensaje2)})
+  }
 }
